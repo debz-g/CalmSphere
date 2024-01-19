@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiInterface {
-    @GET("/")
+    @GET("prod/dailyzen/")
     suspend fun getZenData(@Query("date")date: String, @Query("version")version: String): Response<List<ZenDataModel>>
 }

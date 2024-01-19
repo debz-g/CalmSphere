@@ -2,7 +2,7 @@
 buildscript {
     ext {
         kotlin_version = '1.8.0'
-        hilt_version = '2.44.2'
+        hilt_version = '2.50'
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.2'
@@ -18,7 +18,7 @@ plugins {
     id 'com.android.library' version '7.4.2' apply false
     id 'com.google.gms.google-services' version '4.3.15' apply false
     id("com.google.firebase.crashlytics") version "2.9.9" apply false
-    id("com.google.dagger.hilt.android") version "2.44" apply false
+    id("com.google.dagger.hilt.android") version "2.50" apply false
 }
 
 tasks.register('clean', Delete) {

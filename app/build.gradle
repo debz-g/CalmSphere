@@ -83,8 +83,8 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 
     //Hilt Impelementation
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation "com.google.dagger:hilt-android:2.50"
+    kapt "com.google.dagger:hilt-android-compiler:2.50"
 
     //Navigation Component Jetpacck
     implementation 'androidx.navigation:navigation-fragment-ktx:2.7.6'
@@ -106,4 +106,8 @@ dependencies {
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+}
+
+kapt {
+    correctErrorTypes = true
 }
