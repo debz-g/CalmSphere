@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="material_red">#FF7189</color>
+    <color name="material_red_dark">#FF4766</color>
+    <color name="material_blue">#4599FF</color>
+    <color name="material_purple">#B15AFF</color>
+    <color name="material_green">#43C685</color>
+    <color name="button_green">#338D36</color>
+    <color name="card_background">#F0D6BD</color>
+    <color name="material_orange">#FF6D63</color>
+    <color name="subtle_red">#D2FFC8D2</color>
+    <color name="dark">#4D4D4D</color>
+    <color name="grey">#727272</color>
+    <color name="light_grey">#F3F3F3</color>
+    <color name="material_grey">#EFEFEF</color>
+    <color name="border_color">#bebebe</color>
+    <color name="black_tile">#202020</color>
+    <color name="trans">#00FFFFFF</color>
+    <color name="card_color1">#FFF1D4</color>
+    <color name="card_color2">#FFDAB8</color>
+    <color name="card_color3">#FFD3D3</color>
+    <color name="darkYellow">#FFBB00</color>
+    <color name="colorAccent">#2249CA</color>
+    <color name="darkBlue">#06038D</color>
+    <color name="lightBlue">#7186DB</color>
+
+
+    <!--SnackBar Colors-->
+    <color name="colorSuccess">#4caf50</color>
+    <color name="colorError">#d32f2f</color>
+    <color name="colorWarning">#ff9800</color>
+
+    <color name="design_primary">#6200EE</color>
+    <color name="design_primary_variant">#3700B3</color>
+    <color name="design_secondary">#03DAC5</color>
+    <color name="design_secondary_variant">#018786</color>
+
+    <color name="yellow">#FFDA58</color>
+    <color name="orange">#E44000</color>
+    <color name="background_bottom_sheet">#1E1E1E</color>
+
+    <color name="header_text_color">#201A1B</color>
+    <color name="card_outline_color">#D7C1C3</color>
+    <color name="round_button_color">#FFD9DD</color>
+</resources>
