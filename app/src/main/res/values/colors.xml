@@ -56,4 +56,5 @@
     <color name="copy_text_color">#EA436B</color>
     <color name="copy_stroke_color">#847374</color>
     <color name="divider_color">#99C1C399</color>
+    <color name="copied_icon_color">#EA436B</color>
 </resources>

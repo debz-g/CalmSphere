@@ -25,6 +25,7 @@ import dev.redfox.calmsphere.adapter.DailyZenAdapter
 import dev.redfox.calmsphere.databinding.FragmentDailyZenBinding
 import dev.redfox.calmsphere.models.ShareDataModel
 import dev.redfox.calmsphere.models.ZenDataModel
+import dev.redfox.calmsphere.ui.ui_elements.ShareBottomSheet
 import dev.redfox.calmsphere.viewmodels.ZenViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -103,7 +104,9 @@ class DailyZenFragment : Fragment() {
             }
 
             dailyZenAdapter.onShareClick = { shareData ->
-                shareToWhatsApp(shareData)
+//                shareToWhatsApp(shareData)
+                val share = ShareBottomSheet(shareData)
+                share.show(parentFragmentManager, "share")
             }
 
             dailyZenAdapter.onSaveClick = {

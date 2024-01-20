@@ -2,4 +2,7 @@
 <resources>
     <string name="read_full_post">Read Full Post</string>
     <string name="share_to">Share to</string>
+    <string name="inspire_your_friends">Inspire Your Friends</string>
+    <string name="copy">Copy</string>
+    <string name="copied">Copied</string>
 </resources>
