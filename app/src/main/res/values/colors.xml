@@ -50,4 +50,10 @@
     <color name="card_outline_color">#D7C1C3</color>
     <color name="round_button_color">#FFD9DD</color>
     <color name="card_text_color">#2C1518</color>
+    <color name="share_sheet_heading">#201A1B</color>
+    <color name="share_sheet_bg_color">#FEF1F1</color>
+    <color name="copy_card_color">#FFD9DD</color>
+    <color name="copy_text_color">#EA436B</color>
+    <color name="copy_stroke_color">#847374</color>
+    <color name="divider_color">#99C1C399</color>
 </resources>
