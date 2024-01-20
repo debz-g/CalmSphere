@@ -106,6 +106,9 @@ dependencies {
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //In App Browser
+    implementation 'androidx.browser:browser:1.7.0'
 }
 
 kapt {

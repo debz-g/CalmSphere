@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
@@ -18,12 +19,14 @@ class DailyZenAdapter(
 
     var onShareClick: ((ShareDataModel) -> Unit)? = null
     var onSaveClick: ((ZenDataModel) -> Unit)? = null
+    var onReadArticleClick: ((String) -> Unit)? = null
 
     class DailyZenViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val quoteText: TextView = itemView.findViewById(R.id.tvQuote)
         val quoteImage: ImageView = itemView.findViewById(R.id.ivQuote)
         val btnShare: MaterialCardView = itemView.findViewById(R.id.btnShare)
         val btnSave: MaterialCardView = itemView.findViewById(R.id.btnSave)
+        val btnReadArticle: MaterialCardView = itemView.findViewById(R.id.btnReadArticle)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyZenViewHolder {
@@ -33,14 +36,25 @@ class DailyZenAdapter(
 
     override fun onBindViewHolder(holder: DailyZenViewHolder, position: Int) {
         val zenData = zenData[position]
-        holder.quoteText.text = zenData.text
+
+        if (zenData.articleUrl.isNotEmpty()){
+            holder.btnReadArticle.let {
+                it.isVisible = true
+                it.setOnClickListener {
+                    onReadArticleClick?.invoke(zenData.articleUrl)
+                }
+            }
+        } else {
+            holder.btnReadArticle.isVisible = false
+        }
+        holder.quoteText.text = zenData.themeTitle
         Picasso.get().load(zenData.dzImageUrl).into(holder.quoteImage)
 
         holder.btnShare.setOnClickListener {
             val shareDate = ShareDataModel(
                 zenData.text,
-                zenData.dzImageUrl,
-                zenData.author
+                zenData.author,
+                zenData.dzImageUrl
             )
             onShareClick?.invoke(shareDate)
         }

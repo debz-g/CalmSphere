@@ -49,4 +49,5 @@
     <color name="header_text_color">#201A1B</color>
     <color name="card_outline_color">#D7C1C3</color>
     <color name="round_button_color">#FFD9DD</color>
+    <color name="card_text_color">#2C1518</color>
 </resources>

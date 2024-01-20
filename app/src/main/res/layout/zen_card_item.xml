@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:outlineAmbientShadowColor="@color/trans"
         android:outlineProvider="none"
+        android:layout_marginBottom="32dp"
         android:outlineSpotShadowColor="@color/trans"
         android:shadowColor="@color/trans"
         app:cardBackgroundColor="@color/white"
@@ -31,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="QUOTE OF THE DAY"
+            android:textColor="@color/card_text_color"
             android:fontFamily="@font/inter_semi_bold"
             android:layout_marginStart="16dp"
             android:layout_marginVertical="12dp"
@@ -49,6 +51,47 @@
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnReadArticle"
+                android:layout_width="wrap_content"
+                app:cardCornerRadius="50dp"
+                android:visibility="gone"
+                android:layout_marginVertical="16dp"
+                android:layout_marginStart="16dp"
+                app:cardBackgroundColor="@color/round_button_color"
+                app:strokeWidth="0dp"
+                android:layout_height="wrap_content"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="10dp"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/article"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/read_full_post"
+                        android:fontFamily="@font/inter_medium"
+                        android:textSize="14sp"
+                        android:textColor="@color/card_text_color"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btnShare"
