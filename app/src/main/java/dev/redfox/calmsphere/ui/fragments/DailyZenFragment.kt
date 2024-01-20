@@ -26,6 +26,10 @@ import dev.redfox.calmsphere.databinding.FragmentDailyZenBinding
 import dev.redfox.calmsphere.models.ShareDataModel
 import dev.redfox.calmsphere.models.ZenDataModel
 import dev.redfox.calmsphere.viewmodels.ZenViewModel
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class DailyZenFragment : Fragment() {
@@ -33,9 +37,11 @@ class DailyZenFragment : Fragment() {
     private var _binding: FragmentDailyZenBinding? = null
     private val binding
         get() = _binding!!
-    val zenViewModel : ZenViewModel by viewModels<ZenViewModel>()
+    val zenViewModel: ZenViewModel by viewModels<ZenViewModel>()
     private lateinit var dailyZenAdapter: DailyZenAdapter
     var zenData = ArrayList<ZenDataModel>()
+    private val calendar: Calendar = Calendar.getInstance()
+    private var daysOffset: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,23 +55,24 @@ class DailyZenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        zenViewModel.getZenData("20231215","2")
+        zenViewModel.getZenData(updateDate(0), "2")
         initClicks()
         attachObservers()
     }
 
 
-    private fun initClicks(){
-        binding.btnDateBack.setOnClickListener{
-
+    private fun initClicks() {
+        binding.btnDateBack.setOnClickListener {
+            zenViewModel.getZenData(updateDate(-1), "2")
         }
 
         binding.btnDateForward.setOnClickListener {
-
+            binding.btnDateBack.isVisible = true
+            zenViewModel.getZenData(updateDate(1), "2")
         }
     }
 
-    private fun attachObservers(){
+    private fun attachObservers() {
         zenViewModel.zenDataResponse.observe(viewLifecycleOwner, Observer {
             zenData = it.body() as ArrayList<ZenDataModel>
 
@@ -80,7 +87,7 @@ class DailyZenFragment : Fragment() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)
 
-                        val mLayoutManager =  (recyclerView.layoutManager as LinearLayoutManager)
+                        val mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
 
                         val lastVisibleItemPosition =
                             mLayoutManager.findLastVisibleItemPosition()
@@ -103,20 +110,25 @@ class DailyZenFragment : Fragment() {
                 Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
             }
 
-            dailyZenAdapter.onReadArticleClick = { articleLink->
+            dailyZenAdapter.onReadArticleClick = { articleLink ->
                 openCustomTab(Uri.parse(articleLink))
             }
 
         })
     }
 
-    private fun shareToWhatsApp(it: ShareDataModel){
+    private fun shareToWhatsApp(it: ShareDataModel) {
         val target = object : Target {
             override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
 
                 val shareText = "${it.text}\n\nAuthor: ${it.author}"
                 val bitmapPath: String =
-                    MediaStore.Images.Media.insertImage(context?.contentResolver, bitmap, "Image", null)
+                    MediaStore.Images.Media.insertImage(
+                        context?.contentResolver,
+                        bitmap,
+                        "Image",
+                        null
+                    )
                 val bitmapUri = Uri.parse(bitmapPath)
                 val shareIntent = Intent(Intent.ACTION_SEND)
                 shareIntent.type = "image/*"
@@ -126,7 +138,11 @@ class DailyZenFragment : Fragment() {
                 try {
                     context?.startActivity(shareIntent)
                 } catch (ex: ActivityNotFoundException) {
-                    Toast.makeText(context, "Whatsapp is not installed on your device", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Whatsapp is not installed on your device",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -145,10 +161,42 @@ class DailyZenFragment : Fragment() {
     }
 
 
-    private fun openCustomTab(url: Uri){
+    private fun openCustomTab(url: Uri) {
         val builder = CustomTabsIntent.Builder()
         builder.setShowTitle(true)
-        builder.build().launchUrl(requireActivity(),url)
+        builder.build().launchUrl(requireActivity(), url)
+    }
+
+    private fun updateDate(days: Int): String {
+        // Adjust the calendar based on the requested days
+        daysOffset += days
+
+        calendar.time = Date()
+        calendar.add(Calendar.DAY_OF_YEAR, daysOffset)
+
+        val currentDate = calendar.time
+        val dateFormat = SimpleDateFormat("MMMM d", Locale.getDefault())
+        val returnDateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+        val returnFormattedDate = returnDateFormat.format(currentDate)
+        val formattedDate = dateFormat.format(currentDate)
+        val weekRange = -2 downTo -6
+
+        if (daysOffset == 0) {
+            binding.tvDate.text = "Today"
+        } else if (daysOffset == -1) {
+            binding.tvDate.text = "Yesterday"
+        } else if (weekRange.contains(daysOffset)) {
+            binding.tvDate.text = formattedDate
+            if (daysOffset == -6)  binding.btnDateBack.isVisible = false
+        } else {
+            // Show a toast when going beyond 7 days
+            Toast.makeText(context, "Cannot go beyond 7 days $daysOffset", Toast.LENGTH_SHORT).show()
+
+        }
+
+        // Show/hide forward button based on the date
+        binding.btnDateForward.visibility = if (daysOffset < 0) View.VISIBLE else View.GONE
+        return returnFormattedDate
     }
 
 }
