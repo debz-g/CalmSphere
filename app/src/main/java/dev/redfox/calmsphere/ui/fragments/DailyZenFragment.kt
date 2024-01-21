@@ -26,6 +26,7 @@ import dev.redfox.calmsphere.databinding.FragmentDailyZenBinding
 import dev.redfox.calmsphere.models.ShareDataModel
 import dev.redfox.calmsphere.models.ZenDataModel
 import dev.redfox.calmsphere.ui.ui_elements.ShareBottomSheet
+import dev.redfox.calmsphere.utils.Resource
 import dev.redfox.calmsphere.viewmodels.ZenViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -40,7 +41,9 @@ class DailyZenFragment : Fragment() {
         get() = _binding!!
     val zenViewModel: ZenViewModel by viewModels<ZenViewModel>()
     private lateinit var dailyZenAdapter: DailyZenAdapter
+    private lateinit var dailyZenOfflineAdapter: DailyZenAdapter
     var zenData = ArrayList<ZenDataModel>()
+    var zenOfflineData = ArrayList<ZenDataModel>()
     private val calendar: Calendar = Calendar.getInstance()
     private var daysOffset: Int = 0
 
@@ -56,7 +59,7 @@ class DailyZenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        zenViewModel.getZenData(updateDate(0), "2")
+//        zenViewModel.getZenData(updateDate(0), "2")
         initClicks()
         attachObservers()
     }
@@ -74,8 +77,60 @@ class DailyZenFragment : Fragment() {
     }
 
     private fun attachObservers() {
+
+        zenViewModel.zenDataOfflineResponse.observe(viewLifecycleOwner, Observer { result ->
+            binding.progressBar.isVisible = result is Resource.Loading && result.data.isNullOrEmpty()
+//            Toast.makeText(context, result.error?.localizedMessage, Toast.LENGTH_SHORT).show()
+
+            zenOfflineData = result.data as ArrayList<ZenDataModel>
+
+            dailyZenOfflineAdapter = DailyZenAdapter(result.data)
+
+            binding.apply {
+                recyclerView.setHasFixedSize(true)
+                recyclerView.adapter = dailyZenOfflineAdapter
+                recyclerView.layoutManager = LinearLayoutManager(context)
+
+                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+
+                        val mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
+
+                        val lastVisibleItemPosition =
+                            mLayoutManager.findLastVisibleItemPosition()
+
+                        endImage.visibility = if (lastVisibleItemPosition == zenData.size - 1) {
+                            View.VISIBLE
+                        } else {
+                            View.GONE
+                        }
+                    }
+                })
+
+            }
+
+            dailyZenOfflineAdapter.onShareClick = { shareData ->
+                val share = ShareBottomSheet(shareData)
+                share.show(parentFragmentManager, "share")
+            }
+
+            dailyZenOfflineAdapter.onSaveClick = {
+                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+            }
+
+            dailyZenOfflineAdapter .onReadArticleClick = { articleLink ->
+                openCustomTab(Uri.parse(articleLink))
+            }
+
+        })
+
+        zenViewModel.showNoNetworkToast.observe(viewLifecycleOwner){
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+
         zenViewModel.zenDataResponse.observe(viewLifecycleOwner, Observer {
-            zenData = it.body() as ArrayList<ZenDataModel>
+            zenData = it?.body() as ArrayList<ZenDataModel>
 
             dailyZenAdapter = DailyZenAdapter(zenData)
 
@@ -190,10 +245,11 @@ class DailyZenFragment : Fragment() {
             binding.tvDate.text = "Yesterday"
         } else if (weekRange.contains(daysOffset)) {
             binding.tvDate.text = formattedDate
-            if (daysOffset == -6)  binding.btnDateBack.isVisible = false
+            if (daysOffset == -6) binding.btnDateBack.isVisible = false
         } else {
             // Show a toast when going beyond 7 days
-            Toast.makeText(context, "Cannot go beyond 7 days $daysOffset", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Cannot go beyond 7 days $daysOffset", Toast.LENGTH_SHORT)
+                .show()
 
         }
 

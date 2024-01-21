@@ -1,7 +1,10 @@
 package dev.redfox.calmsphere.di
 
+import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.http.NetworkException
+import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
 import dagger.Provides
@@ -10,6 +13,7 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import dev.redfox.calmsphere.networking.ApiInterface
+import dev.redfox.calmsphere.offline.ZenDatabase
 import dev.redfox.calmsphere.utils.Constants.Companion.BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -69,6 +73,11 @@ object AppModule {
             .client(client)
             .build()
     }
+
+    @Provides
+    fun providesZenDatabase(app: Application): ZenDatabase =
+        Room.databaseBuilder(app, ZenDatabase::class.java, "zen database")
+            .build()
 }
 
 @ViewModelScoped

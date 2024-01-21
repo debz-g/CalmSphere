@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
@@ -15,7 +17,7 @@ import dev.redfox.calmsphere.models.ZenDataModel
 
 class DailyZenAdapter(
     var zenData: MutableList<ZenDataModel>
-) : RecyclerView.Adapter<DailyZenAdapter.DailyZenViewHolder>() {
+) : ListAdapter<ZenDataModel, DailyZenAdapter.DailyZenViewHolder>(ZenDataComparator()) {
 
     var onShareClick: ((ShareDataModel) -> Unit)? = null
     var onSaveClick: ((ZenDataModel) -> Unit)? = null
@@ -48,7 +50,7 @@ class DailyZenAdapter(
             holder.btnReadArticle.isVisible = false
         }
         holder.quoteText.text = zenData.themeTitle
-        Picasso.get().load(zenData.dzImageUrl).into(holder.quoteImage)
+        Picasso.get().load(zenData.dzImageUrl).placeholder(R.drawable.placeholder).into(holder.quoteImage)
 
         holder.btnShare.setOnClickListener {
             val shareDate = ShareDataModel(
@@ -66,5 +68,14 @@ class DailyZenAdapter(
 
     override fun getItemCount(): Int {
         return zenData.size
+    }
+
+    class ZenDataComparator : DiffUtil.ItemCallback<ZenDataModel>() {
+        override fun areItemsTheSame(oldItem: ZenDataModel, newItem: ZenDataModel) =
+            oldItem.uniqueId == newItem.uniqueId
+
+        override fun areContentsTheSame(oldItem: ZenDataModel, newItem: ZenDataModel) =
+            oldItem == newItem
+
     }
 }
