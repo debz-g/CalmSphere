@@ -104,12 +104,12 @@ class ShareBottomSheet(private val shareCardDataModel: ShareDataModel) :
             override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
 
                 val shareText = "${it.text}\n\nAuthor: ${it.author}"
-                val bitmapPath: String =
+                val bitmapPath: String? =
                     MediaStore.Images.Media.insertImage(
                         context?.contentResolver,
                         bitmap,
-                        "Image",
-                        null
+                        "ShareImage",
+                        "Shared"
                     )
                 val bitmapUri = Uri.parse(bitmapPath)
                 shareIntent = Intent(Intent.ACTION_SEND)
