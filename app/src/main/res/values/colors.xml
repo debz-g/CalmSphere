@@ -62,7 +62,13 @@
     <color name="card_text_color_dark">#FFD9DD</color>
 
     <color name="share_sheet_heading">#201A1B</color>
+
     <color name="share_sheet_bg_color">#FEF1F1</color>
+    <color name="share_sheet_bg_color_dark">#201A1B</color>
+
+    <color name="share_apps_bg_color">#FEF1F1</color>
+    <color name="share_apps_bg_color_dark">#201A1B</color>
+
     <color name="copy_card_color">#FFD9DD</color>
     <color name="copy_text_color">#EA436B</color>
     <color name="copy_stroke_color">#847374</color>

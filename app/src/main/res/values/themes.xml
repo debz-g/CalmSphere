@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CalmSphere" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/base_background</item>
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
@@ -16,6 +17,10 @@
 
     <style name="ArrowForward">
         <item name="android:src">@drawable/arrow_forward</item>
+    </style>
+
+    <style name="ButtonClose">
+        <item name="android:src">@drawable/close</item>
     </style>
 
     <style name="ZenCardBackground">
@@ -41,7 +46,15 @@
     </style>
 
     <style name="HeaderText"><item name="android:textColor">@color/header_text_color</item></style>
+    <style name="ShareToText"><item name="android:textColor">@color/black</item></style>
     <style name="CardTextHeader"><item name="android:textColor">@color/card_text_header_color</item></style>
     <style name="CardText"><item name="android:textColor">@color/card_text_color</item></style>
 
+    <style name="ShareSheetBackground" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/share_sheet_bg_color</item>
+    </style>
+
+    <style name="ShareAppBackground">
+        <item name="background">@color/share_apps_bg_color</item>
+    </style>
 </resources>
