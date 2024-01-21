@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    style="@style/BaseBackground"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".ui.fragments.DailyZenFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -19,6 +19,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            style="@style/BaseBackgroundHeader"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white">
 
@@ -27,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:src="@drawable/arrow_back_ios_new" />
+                style="@style/ArrowBack" />
 
             <TextView
                 android:id="@+id/tvDate"
@@ -35,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/inter_regular"
-                android:textColor="@color/header_text_color"
+                style="@style/HeaderText"
                 android:textSize="22sp"
                 android:text="Today" />
 
@@ -45,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/arrow_forward_ios" />
+                style="@style/ArrowForward" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -58,6 +59,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="40dp"
+        style="@style/BaseBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

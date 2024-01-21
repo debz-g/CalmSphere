@@ -4,4 +4,40 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <style name="BaseBackground"><item name="android:background">@color/base_background_dark</item> </style>
+    <style name="BaseBackgroundHeader"><item name="android:backgroundTint">@color/base_background_dark</item> </style>
+
+    <style name="ArrowBack">
+        <item name="android:src">@drawable/arrow_back_dark</item>
+    </style>
+
+    <style name="ArrowForward">
+        <item name="android:src">@drawable/arrow_forward_dark</item>
+    </style>
+
+    <style name="ZenCardBackground">
+        <item name="android:background">@color/zen_card_bg_color_dark</item>
+        <item name="strokeColor">@color/card_outline_color_dark</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="RoundButtonShare" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/round_button_color_dark</item>
+        <item name="android:src">@drawable/share_dark</item>
+    </style>
+
+    <style name="RoundButtonBookmark" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/round_button_color_dark</item>
+        <item name="android:src">@drawable/bookmark_dark</item>
+    </style>
+
+    <style name="RoundButtonArticle" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/round_button_color_dark</item>
+        <item name="android:src">@drawable/article_dark</item>
+    </style>
+
+    <style name="HeaderText"><item name="android:textColor">@color/header_text_color_dark</item></style>
+    <style name="CardTextHeader"><item name="android:textColor">@color/card_text_header_color_dark</item></style>
+    <style name="CardText"><item name="android:textColor">@color/card_text_color_dark</item></style>
 </resources>

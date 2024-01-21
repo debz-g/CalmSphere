@@ -6,4 +6,42 @@
     </style>
 
     <style name="Theme.CalmSphere" parent="Base.Theme.CalmSphere" />
+
+    <style name="BaseBackground"><item name="android:background">@color/base_background</item> </style>
+    <style name="BaseBackgroundHeader"><item name="android:backgroundTint">@color/base_background</item> </style>
+
+    <style name="ArrowBack">
+        <item name="android:src">@drawable/arrow_back</item>
+    </style>
+
+    <style name="ArrowForward">
+        <item name="android:src">@drawable/arrow_forward</item>
+    </style>
+
+    <style name="ZenCardBackground">
+        <item name="android:background">@color/zen_card_bg_color</item>
+        <item name="strokeColor">@color/card_outline_color</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="RoundButtonShare" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/round_button_color</item>
+        <item name="android:src">@drawable/share</item>
+    </style>
+
+    <style name="RoundButtonBookmark" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/round_button_color</item>
+        <item name="android:src">@drawable/bookmark</item>
+
+    </style>
+
+    <style name="RoundButtonArticle" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/round_button_color</item>
+        <item name="android:src">@drawable/article</item>
+    </style>
+
+    <style name="HeaderText"><item name="android:textColor">@color/header_text_color</item></style>
+    <style name="CardTextHeader"><item name="android:textColor">@color/card_text_header_color</item></style>
+    <style name="CardText"><item name="android:textColor">@color/card_text_color</item></style>
+
 </resources>

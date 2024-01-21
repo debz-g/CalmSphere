@@ -2,138 +2,127 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BaseBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/ZenCardBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:outlineAmbientShadowColor="@color/trans"
-        android:outlineProvider="none"
         android:layout_marginBottom="32dp"
-        android:outlineSpotShadowColor="@color/trans"
-        android:shadowColor="@color/trans"
-        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/card_outline_color"
-        app:strokeWidth="1dp"
         tools:targetApi="p">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-
-        <TextView
-            android:id="@+id/tvQuote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="QUOTE OF THE DAY"
-            android:textColor="@color/card_text_color"
-            android:fontFamily="@font/inter_semi_bold"
-            android:layout_marginStart="16dp"
-            android:layout_marginVertical="12dp"
-            android:textSize="16sp"
-            />
-
-        <ImageView
-            android:id="@+id/ivQuote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/media"
-            />
-
         <LinearLayout
+            style="@style/ZenCardBackground"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btnReadArticle"
-                android:layout_width="wrap_content"
-                app:cardCornerRadius="50dp"
-                android:visibility="gone"
-                android:layout_marginVertical="16dp"
-                android:layout_marginStart="16dp"
-                app:cardBackgroundColor="@color/round_button_color"
-                app:strokeWidth="0dp"
+            <TextView
+                android:id="@+id/tvQuote"
+                style="@style/CardTextHeader"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_marginVertical="10dp"
-                    >
-                    <ImageView
-                        android:layout_width="wrap_content"
+                android:layout_marginVertical="12dp"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/inter_semi_bold"
+                android:textSize="16sp"
+                tools:text="QUOTE OF THE DAY" />
+
+            <ImageView
+                android:id="@+id/ivQuote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/media" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnReadArticle"
+                    style="@style/RoundButtonArticle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone"
+                    app:cardCornerRadius="50dp"
+                    app:strokeWidth="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/article"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_gravity="center_vertical"
-                        />
+                        android:layout_marginVertical="10dp"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/read_full_post"
-                        android:fontFamily="@font/inter_medium"
-                        android:textSize="14sp"
-                        android:textColor="@color/card_text_color"
-                        android:layout_marginEnd="16dp"
-                        android:layout_gravity="center_vertical"
-                        />
+                        <ImageView
+                            style="@style/RoundButtonArticle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="8dp" />
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/inter_medium"
+                            android:text="@string/read_full_post"
+                            style="@style/CardText"
+                            android:textSize="14sp" />
 
-            </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btnShare"
-                android:layout_width="wrap_content"
-                app:cardCornerRadius="50dp"
-                android:layout_marginVertical="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                app:cardBackgroundColor="@color/round_button_color"
-                app:strokeWidth="0dp"
-                android:layout_height="wrap_content"
-                >
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/share"
-                    />
-            </com.google.android.material.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btnSave"
-                android:layout_width="wrap_content"
-                app:cardCornerRadius="50dp"
-                android:layout_marginVertical="16dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
-                app:cardBackgroundColor="@color/round_button_color"
-                app:strokeWidth="0dp"
-                android:layout_height="wrap_content"
-                >
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/bookmark"
-                    />
-            </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnShare"
+                    style="@style/RoundButtonShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="50dp"
+                    app:strokeWidth="0dp">
+
+                    <ImageView
+                        style="@style/RoundButtonShare"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    style="@style/RoundButtonBookmark"
+                    app:cardCornerRadius="50dp"
+                    app:strokeWidth="0dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        style="@style/RoundButtonBookmark" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

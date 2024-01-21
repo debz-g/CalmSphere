@@ -47,9 +47,20 @@
     <color name="background_bottom_sheet">#1E1E1E</color>
 
     <color name="header_text_color">#201A1B</color>
+    <color name="header_text_color_dark">#CFC4C4</color>
+
     <color name="card_outline_color">#D7C1C3</color>
+    <color name="card_outline_color_dark">#524345</color>
+
     <color name="round_button_color">#FFD9DD</color>
+    <color name="round_button_color_dark">#5C3F43</color>
+
+    <color name="card_text_header_color">#201A1B</color>
+    <color name="card_text_header_color_dark">#CFC4C4</color>
+
     <color name="card_text_color">#2C1518</color>
+    <color name="card_text_color_dark">#FFD9DD</color>
+
     <color name="share_sheet_heading">#201A1B</color>
     <color name="share_sheet_bg_color">#FEF1F1</color>
     <color name="copy_card_color">#FFD9DD</color>
@@ -57,4 +68,9 @@
     <color name="copy_stroke_color">#847374</color>
     <color name="divider_color">#99C1C399</color>
     <color name="copied_icon_color">#EA436B</color>
+    <color name="zen_card_bg_color">#FFF8F7</color>
+    <color name="zen_card_bg_color_dark">#181212</color>
+
+    <color name="base_background">#FFFFFF</color>
+    <color name="base_background_dark">#201A1B</color>
 </resources>
