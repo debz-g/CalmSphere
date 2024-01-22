@@ -7,6 +7,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ResolveInfo
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -147,8 +148,24 @@ class ShareBottomSheet(private val shareCardDataModel: ShareDataModel) :
                     )
                 }
 
-                addExtraAppsToShare("Download", R.drawable.download_logo, DOWNLOAD_TAG)
-                addExtraAppsToShare("More",R.drawable.container, MORE_TAG)
+                val nightModeFlags = context!!.resources.configuration.uiMode and
+                        Configuration.UI_MODE_NIGHT_MASK
+                when (nightModeFlags) {
+                    Configuration.UI_MODE_NIGHT_YES -> {
+                        addExtraAppsToShare("Download", R.drawable.download_logo_dark, DOWNLOAD_TAG)
+                        addExtraAppsToShare("More", R.drawable.more_logo_dark, MORE_TAG)
+                    }
+
+                    Configuration.UI_MODE_NIGHT_NO -> {
+                        addExtraAppsToShare("Download", R.drawable.download_logo, DOWNLOAD_TAG)
+                        addExtraAppsToShare("More", R.drawable.more_logo, MORE_TAG)
+                    }
+
+                    Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+                        addExtraAppsToShare("Download", R.drawable.download_logo, DOWNLOAD_TAG)
+                        addExtraAppsToShare("More", R.drawable.more_logo, MORE_TAG)
+                    }
+                }
 
                 adapter.addItems(availableApps)
             }
@@ -167,7 +184,11 @@ class ShareBottomSheet(private val shareCardDataModel: ShareDataModel) :
             .into(target)
     }
 
-    fun addExtraAppsToShare(appDescription: String,@DrawableRes appLogo: Int, packageName: String){
+    fun addExtraAppsToShare(
+        appDescription: String,
+        @DrawableRes appLogo: Int,
+        packageName: String
+    ) {
         val appIcon = ResourcesCompat.getDrawable(
             resources,
             appLogo,
@@ -191,15 +212,18 @@ class ShareBottomSheet(private val shareCardDataModel: ShareDataModel) :
                 "Share with friends"
             )
             ContextCompat.startActivity(requireContext(), shareIntent, null)
-        } else if(itemEntity.packageName == DOWNLOAD_TAG) {
+        } else if (itemEntity.packageName == DOWNLOAD_TAG) {
             imageBitmap?.let { saveBitmapImage(it) }
-        }
-        else {
+        } else {
             shareIntent.setPackage(itemEntity.packageName)
             try {
                 startActivity(shareIntent)
-            } catch (ex: ActivityNotFoundException){
-                Toast.makeText(requireContext(), "App not installed. Please install and try again.", Toast.LENGTH_SHORT).show()
+            } catch (ex: ActivityNotFoundException) {
+                Toast.makeText(
+                    requireContext(),
+                    "App not installed. Please install and try again.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }
