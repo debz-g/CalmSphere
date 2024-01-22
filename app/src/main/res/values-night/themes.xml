@@ -54,4 +54,12 @@
     <style name="ShareAppBackground">
         <item name="background">@color/share_apps_bg_color_dark</item>
     </style>
+
+    <style name="ShimmerCardView" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/shimmer_color_dark</item>
+    </style>
+
+    <style name="ShimmerBackground">
+        <item name="background">@color/shimmer_color_dark</item>
+    </style>
 </resources>

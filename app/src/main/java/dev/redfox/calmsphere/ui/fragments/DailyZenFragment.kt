@@ -1,9 +1,11 @@
 package dev.redfox.calmsphere.ui.fragments
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -26,6 +28,7 @@ import dev.redfox.calmsphere.databinding.FragmentDailyZenBinding
 import dev.redfox.calmsphere.models.ShareDataModel
 import dev.redfox.calmsphere.models.ZenDataModel
 import dev.redfox.calmsphere.ui.ui_elements.ShareBottomSheet
+import dev.redfox.calmsphere.utils.Constants
 import dev.redfox.calmsphere.utils.Resource
 import dev.redfox.calmsphere.viewmodels.ZenViewModel
 import java.text.SimpleDateFormat
@@ -67,24 +70,66 @@ class DailyZenFragment : Fragment() {
 
     private fun initClicks() {
         binding.btnDateBack.setOnClickListener {
-            zenViewModel.getZenData(updateDate(-1), "2")
+            val updatedDate = updateDate(-1)
+            if (updatedDate == Constants.NO_NETWORK_EXCEPTION) {
+                Toast.makeText(context, Constants.NO_NETWORK_EXCEPTION, Toast.LENGTH_SHORT).show()
+                binding.shimmerLayout.stopShimmer()
+                binding.recyclerView.isVisible = true
+                binding.shimmerLayout.isVisible = false
+            } else {
+//                binding.progressBar.isVisible = true
+                binding.shimmerLayout.isVisible = true
+                binding.recyclerView.isVisible = false
+                binding.shimmerLayout.startShimmer()
+                zenViewModel.getZenData(updatedDate, "2")
+            }
         }
 
         binding.btnDateForward.setOnClickListener {
-            binding.btnDateBack.isVisible = true
-            zenViewModel.getZenData(updateDate(1), "2")
+            val updatedDate = updateDate(1)
+            if (updatedDate == Constants.NO_NETWORK_EXCEPTION) {
+                Toast.makeText(context, Constants.NO_NETWORK_EXCEPTION, Toast.LENGTH_SHORT).show()
+                binding.shimmerLayout.stopShimmer()
+                binding.recyclerView.isVisible = true
+                binding.shimmerLayout.isVisible = false
+            } else {
+//                binding.progressBar.isVisible = true
+                binding.shimmerLayout.isVisible = true
+                binding.recyclerView.isVisible = false
+                binding.shimmerLayout.startShimmer()
+                binding.btnDateBack.isVisible = true
+                zenViewModel.getZenData(updatedDate, "2")
+            }
         }
     }
 
     private fun attachObservers() {
 
         zenViewModel.zenDataOfflineResponse.observe(viewLifecycleOwner, Observer { result ->
-            binding.progressBar.isVisible = result is Resource.Loading && result.data.isNullOrEmpty()
-//            Toast.makeText(context, result.error?.localizedMessage, Toast.LENGTH_SHORT).show()
+
+            when(result){
+                is Resource.Error -> {
+                    Toast.makeText(context, result.error?.localizedMessage, Toast.LENGTH_SHORT).show()
+                    binding.shimmerLayout.stopShimmer()
+                    binding.recyclerView.isVisible = true
+                    binding.shimmerLayout.isVisible = false
+                }
+                is Resource.Loading -> {
+                    binding.shimmerLayout.isVisible = true
+                    binding.recyclerView.isVisible = false
+                    binding.shimmerLayout.startShimmer()
+                }
+                is Resource.Success -> {
+                    binding.shimmerLayout.stopShimmer()
+                    binding.recyclerView.isVisible = true
+                    binding.shimmerLayout.isVisible = false
+                }
+            }
 
             zenOfflineData = result.data as ArrayList<ZenDataModel>
 
             dailyZenOfflineAdapter = DailyZenAdapter(result.data)
+
 
             binding.apply {
                 recyclerView.setHasFixedSize(true)
@@ -119,19 +164,25 @@ class DailyZenFragment : Fragment() {
                 Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
             }
 
-            dailyZenOfflineAdapter .onReadArticleClick = { articleLink ->
+            dailyZenOfflineAdapter.onReadArticleClick = { articleLink ->
                 openCustomTab(Uri.parse(articleLink))
             }
 
         })
 
-        zenViewModel.showNoNetworkToast.observe(viewLifecycleOwner){
+        zenViewModel.showNoNetworkToast.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            binding.shimmerLayout.stopShimmer()
+            binding.recyclerView.isVisible = true
+            binding.shimmerLayout.isVisible = false
         }
 
         zenViewModel.zenDataResponse.observe(viewLifecycleOwner, Observer {
             zenData = it?.body() as ArrayList<ZenDataModel>
-
+//            binding.progressBar.isVisible = false
+            binding.shimmerLayout.stopShimmer()
+            binding.shimmerLayout.isVisible = false
+            binding.recyclerView.isVisible = true
             dailyZenAdapter = DailyZenAdapter(zenData)
 
             binding.apply {
@@ -175,48 +226,48 @@ class DailyZenFragment : Fragment() {
         })
     }
 
-    private fun shareToWhatsApp(it: ShareDataModel) {
-        val target = object : Target {
-            override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-
-                val shareText = "${it.text}\n\nAuthor: ${it.author}"
-                val bitmapPath: String =
-                    MediaStore.Images.Media.insertImage(
-                        context?.contentResolver,
-                        bitmap,
-                        "Image",
-                        null
-                    )
-                val bitmapUri = Uri.parse(bitmapPath)
-                val shareIntent = Intent(Intent.ACTION_SEND)
-                shareIntent.type = "image/*"
-                shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
-                shareIntent.putExtra(Intent.EXTRA_TEXT, shareText)
-                shareIntent.setPackage("com.whatsapp")
-                try {
-                    context?.startActivity(shareIntent)
-                } catch (ex: ActivityNotFoundException) {
-                    Toast.makeText(
-                        context,
-                        "Whatsapp is not installed on your device",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-                Toast.makeText(context, "Failed to read image", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-                Toast.makeText(context, "Loading Image! Please Wait!", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        Picasso.get()
-            .load(it.imageUrl)
-            .into(target)
-    }
+//    private fun shareToWhatsApp(it: ShareDataModel) {
+//        val target = object : Target {
+//            override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+//
+//                val shareText = "${it.text}\n\nAuthor: ${it.author}"
+//                val bitmapPath: String =
+//                    MediaStore.Images.Media.insertImage(
+//                        context?.contentResolver,
+//                        bitmap,
+//                        "Image",
+//                        null
+//                    )
+//                val bitmapUri = Uri.parse(bitmapPath)
+//                val shareIntent = Intent(Intent.ACTION_SEND)
+//                shareIntent.type = "image/*"
+//                shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
+//                shareIntent.putExtra(Intent.EXTRA_TEXT, shareText)
+//                shareIntent.setPackage("com.whatsapp")
+//                try {
+//                    context?.startActivity(shareIntent)
+//                } catch (ex: ActivityNotFoundException) {
+//                    Toast.makeText(
+//                        context,
+//                        "Whatsapp is not installed on your device",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            }
+//
+//            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+//                Toast.makeText(context, "Failed to read image", Toast.LENGTH_SHORT).show()
+//            }
+//
+//            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+//                Toast.makeText(context, "Loading Image! Please Wait!", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//
+//        Picasso.get()
+//            .load(it.imageUrl)
+//            .into(target)
+//    }
 
 
     private fun openCustomTab(url: Uri) {
@@ -227,35 +278,47 @@ class DailyZenFragment : Fragment() {
 
     private fun updateDate(days: Int): String {
         // Adjust the calendar based on the requested days
-        daysOffset += days
 
-        calendar.time = Date()
-        calendar.add(Calendar.DAY_OF_YEAR, daysOffset)
+        if (isNetworkAvailable()) {
+            daysOffset += days
 
-        val currentDate = calendar.time
-        val dateFormat = SimpleDateFormat("MMMM d", Locale.getDefault())
-        val returnDateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
-        val returnFormattedDate = returnDateFormat.format(currentDate)
-        val formattedDate = dateFormat.format(currentDate)
-        val weekRange = -2 downTo -6
+            calendar.time = Date()
+            calendar.add(Calendar.DAY_OF_YEAR, daysOffset)
 
-        if (daysOffset == 0) {
-            binding.tvDate.text = "Today"
-        } else if (daysOffset == -1) {
-            binding.tvDate.text = "Yesterday"
-        } else if (weekRange.contains(daysOffset)) {
-            binding.tvDate.text = formattedDate
-            if (daysOffset == -6) binding.btnDateBack.isVisible = false
+            val currentDate = calendar.time
+            val dateFormat = SimpleDateFormat("MMMM d", Locale.getDefault())
+            val returnDateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+            val returnFormattedDate = returnDateFormat.format(currentDate)
+            val formattedDate = dateFormat.format(currentDate)
+            val weekRange = -2 downTo -6
+
+            if (daysOffset == 0) {
+                binding.tvDate.text = "Today"
+            } else if (daysOffset == -1) {
+                binding.tvDate.text = "Yesterday"
+            } else if (weekRange.contains(daysOffset)) {
+                binding.tvDate.text = formattedDate
+                if (daysOffset == -6) binding.btnDateBack.isVisible = false
+            } else {
+                // Show a toast when going beyond 7 days
+                Toast.makeText(context, "Cannot go beyond 7 days $daysOffset", Toast.LENGTH_SHORT)
+                    .show()
+
+            }
+
+            // Show/hide forward button based on the date
+            binding.btnDateForward.visibility = if (daysOffset < 0) View.VISIBLE else View.GONE
+            return returnFormattedDate
         } else {
-            // Show a toast when going beyond 7 days
-            Toast.makeText(context, "Cannot go beyond 7 days $daysOffset", Toast.LENGTH_SHORT)
-                .show()
-
+            return Constants.NO_NETWORK_EXCEPTION
         }
 
-        // Show/hide forward button based on the date
-        binding.btnDateForward.visibility = if (daysOffset < 0) View.VISIBLE else View.GONE
-        return returnFormattedDate
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        return connectivityManager?.activeNetworkInfo?.isConnected == true
     }
 
 }

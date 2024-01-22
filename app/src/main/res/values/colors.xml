@@ -45,6 +45,9 @@
     <color name="yellow">#FFDA58</color>
     <color name="orange">#E44000</color>
     <color name="background_bottom_sheet">#1E1E1E</color>
+    <color name="shimmer_color">#C2C2C2</color>
+    <color name="shimmer_color_light_shade">#D5D5D5</color>
+    <color name="shimmer_color_dark">#8A8A8A</color>
 
     <color name="header_text_color">#201A1B</color>
     <color name="header_text_color_dark">#CFC4C4</color>

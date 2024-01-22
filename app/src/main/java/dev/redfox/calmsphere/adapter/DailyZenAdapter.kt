@@ -50,7 +50,7 @@ class DailyZenAdapter(
             holder.btnReadArticle.isVisible = false
         }
         holder.quoteText.text = zenData.themeTitle
-        Picasso.get().load(zenData.dzImageUrl).placeholder(R.drawable.placeholder).into(holder.quoteImage)
+        Picasso.get().load(zenData.dzImageUrl).into(holder.quoteImage)
 
         holder.btnShare.setOnClickListener {
             val shareDate = ShareDataModel(

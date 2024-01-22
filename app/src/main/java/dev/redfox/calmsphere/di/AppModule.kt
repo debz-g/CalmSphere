@@ -14,6 +14,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import dev.redfox.calmsphere.networking.ApiInterface
 import dev.redfox.calmsphere.offline.ZenDatabase
+import dev.redfox.calmsphere.utils.Constants
 import dev.redfox.calmsphere.utils.Constants.Companion.BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -88,7 +89,7 @@ class ConnectVerifierInterceptor @Inject constructor(
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         if (!isNetworkAvailable()) {
-            throw IOException("No Network Available!")
+            throw IOException(Constants.NO_NETWORK_EXCEPTION)
         }
         val request = chain.request()
         return chain.proceed(request)
