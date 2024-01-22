@@ -136,22 +136,22 @@ class DailyZenFragment : Fragment() {
                 recyclerView.adapter = dailyZenOfflineAdapter
                 recyclerView.layoutManager = LinearLayoutManager(context)
 
-                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                        super.onScrolled(recyclerView, dx, dy)
-
-                        val mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
-
-                        val lastVisibleItemPosition =
-                            mLayoutManager.findLastVisibleItemPosition()
-
-                        endImage.visibility = if (lastVisibleItemPosition == zenData.size - 1) {
-                            View.VISIBLE
-                        } else {
-                            View.GONE
-                        }
-                    }
-                })
+//                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                        super.onScrolled(recyclerView, dx, dy)
+//
+//                        val mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
+//
+//                        val lastVisibleItemPosition =
+//                            mLayoutManager.findLastVisibleItemPosition()
+//
+//                        endImage.visibility = if (lastVisibleItemPosition == zenData.size - 1) {
+//                            View.VISIBLE
+//                        } else {
+//                            View.GONE
+//                        }
+//                    }
+//                })
 
             }
 
@@ -190,22 +190,22 @@ class DailyZenFragment : Fragment() {
                 recyclerView.adapter = dailyZenAdapter
                 recyclerView.layoutManager = LinearLayoutManager(context)
 
-                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                        super.onScrolled(recyclerView, dx, dy)
-
-                        val mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
-
-                        val lastVisibleItemPosition =
-                            mLayoutManager.findLastVisibleItemPosition()
-
-                        endImage.visibility = if (lastVisibleItemPosition == zenData.size - 1) {
-                            View.VISIBLE
-                        } else {
-                            View.GONE
-                        }
-                    }
-                })
+//                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                        super.onScrolled(recyclerView, dx, dy)
+//
+//                        val mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
+//
+//                        val lastVisibleItemPosition =
+//                            mLayoutManager.findLastVisibleItemPosition()
+//
+//                        endImage.visibility = if (lastVisibleItemPosition == zenData.size - 1) {
+//                            View.VISIBLE
+//                        } else {
+//                            View.GONE
+//                        }
+//                    }
+//                })
 
             }
 
@@ -225,49 +225,6 @@ class DailyZenFragment : Fragment() {
 
         })
     }
-
-//    private fun shareToWhatsApp(it: ShareDataModel) {
-//        val target = object : Target {
-//            override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-//
-//                val shareText = "${it.text}\n\nAuthor: ${it.author}"
-//                val bitmapPath: String =
-//                    MediaStore.Images.Media.insertImage(
-//                        context?.contentResolver,
-//                        bitmap,
-//                        "Image",
-//                        null
-//                    )
-//                val bitmapUri = Uri.parse(bitmapPath)
-//                val shareIntent = Intent(Intent.ACTION_SEND)
-//                shareIntent.type = "image/*"
-//                shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
-//                shareIntent.putExtra(Intent.EXTRA_TEXT, shareText)
-//                shareIntent.setPackage("com.whatsapp")
-//                try {
-//                    context?.startActivity(shareIntent)
-//                } catch (ex: ActivityNotFoundException) {
-//                    Toast.makeText(
-//                        context,
-//                        "Whatsapp is not installed on your device",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-//
-//            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-//                Toast.makeText(context, "Failed to read image", Toast.LENGTH_SHORT).show()
-//            }
-//
-//            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-//                Toast.makeText(context, "Loading Image! Please Wait!", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//
-//        Picasso.get()
-//            .load(it.imageUrl)
-//            .into(target)
-//    }
 
 
     private fun openCustomTab(url: Uri) {
