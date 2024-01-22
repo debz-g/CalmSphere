@@ -62,7 +62,6 @@ class DailyZenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        zenViewModel.getZenData(updateDate(0), "2")
         initClicks()
         attachObservers()
     }
@@ -77,7 +76,6 @@ class DailyZenFragment : Fragment() {
                 binding.recyclerView.isVisible = true
                 binding.shimmerLayout.isVisible = false
             } else {
-//                binding.progressBar.isVisible = true
                 binding.shimmerLayout.isVisible = true
                 binding.recyclerView.isVisible = false
                 binding.shimmerLayout.startShimmer()
@@ -93,7 +91,6 @@ class DailyZenFragment : Fragment() {
                 binding.recyclerView.isVisible = true
                 binding.shimmerLayout.isVisible = false
             } else {
-//                binding.progressBar.isVisible = true
                 binding.shimmerLayout.isVisible = true
                 binding.recyclerView.isVisible = false
                 binding.shimmerLayout.startShimmer()
@@ -129,31 +126,31 @@ class DailyZenFragment : Fragment() {
             zenOfflineData = result.data as ArrayList<ZenDataModel>
 
             dailyZenOfflineAdapter = DailyZenAdapter(result.data)
-
-
-            binding.apply {
-                recyclerView.setHasFixedSize(true)
-                recyclerView.adapter = dailyZenOfflineAdapter
-                recyclerView.layoutManager = LinearLayoutManager(context)
-
-                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                        super.onScrolled(recyclerView, dx, dy)
-
-                        val mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
-
-                        val lastVisibleItemPosition =
-                            mLayoutManager.findLastVisibleItemPosition()
-
-                        endImage.visibility = if (lastVisibleItemPosition == zenData.size - 1) {
-                            View.VISIBLE
-                        } else {
-                            View.GONE
-                        }
-                    }
-                })
-
-            }
+//
+//
+//            binding.apply {
+//                recyclerView.setHasFixedSize(true)
+//                recyclerView.adapter = dailyZenOfflineAdapter
+//                recyclerView.layoutManager = LinearLayoutManager(context)
+//
+//                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                        super.onScrolled(recyclerView, dx, dy)
+//
+//                        val mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
+//
+//                        val lastVisibleItemPosition =
+//                            mLayoutManager.findLastVisibleItemPosition()
+//
+//                        endImage.visibility = if (lastVisibleItemPosition == zenData.size - 1) {
+//                            View.VISIBLE
+//                        } else {
+//                            View.GONE
+//                        }
+//                    }
+//                })
+//
+//            }
 
             dailyZenOfflineAdapter.onShareClick = { shareData ->
                 val share = ShareBottomSheet(shareData)
@@ -185,29 +182,29 @@ class DailyZenFragment : Fragment() {
             binding.recyclerView.isVisible = true
             dailyZenAdapter = DailyZenAdapter(zenData)
 
-            binding.apply {
-                recyclerView.setHasFixedSize(true)
-                recyclerView.adapter = dailyZenAdapter
-                recyclerView.layoutManager = LinearLayoutManager(context)
-
-                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                        super.onScrolled(recyclerView, dx, dy)
-
-                        val mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
-
-                        val lastVisibleItemPosition =
-                            mLayoutManager.findLastVisibleItemPosition()
-
-                        endImage.visibility = if (lastVisibleItemPosition == zenData.size - 1) {
-                            View.VISIBLE
-                        } else {
-                            View.GONE
-                        }
-                    }
-                })
-
-            }
+//            binding.apply {
+//                recyclerView.setHasFixedSize(true)
+//                recyclerView.adapter = dailyZenAdapter
+//                recyclerView.layoutManager = LinearLayoutManager(context)
+//
+//                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                        super.onScrolled(recyclerView, dx, dy)
+//
+//                        val mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
+//
+//                        val lastVisibleItemPosition =
+//                            mLayoutManager.findLastVisibleItemPosition()
+//
+//                        endImage.visibility = if (lastVisibleItemPosition == zenData.size - 1) {
+//                            View.VISIBLE
+//                        } else {
+//                            View.GONE
+//                        }
+//                    }
+//                })
+//
+//            }
 
             dailyZenAdapter.onShareClick = { shareData ->
 //                shareToWhatsApp(shareData)
