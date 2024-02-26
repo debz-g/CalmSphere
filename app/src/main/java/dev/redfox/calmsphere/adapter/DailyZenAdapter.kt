@@ -28,7 +28,6 @@ class DailyZenAdapter(
         val quoteText: TextView = itemView.findViewById(R.id.tvQuote)
         val quoteImage: ImageView = itemView.findViewById(R.id.ivQuote)
         val btnShare: MaterialCardView = itemView.findViewById(R.id.btnShare)
-        val btnSave: MaterialCardView = itemView.findViewById(R.id.btnSave)
         val btnReadArticle: MaterialCardView = itemView.findViewById(R.id.btnReadArticle)
     }
 
@@ -60,10 +59,6 @@ class DailyZenAdapter(
                 zenData.dzImageUrl
             )
             onShareClick?.invoke(shareDate)
-        }
-
-        holder.btnSave.setOnClickListener {
-            onSaveClick?.invoke(zenData)
         }
     }
 
