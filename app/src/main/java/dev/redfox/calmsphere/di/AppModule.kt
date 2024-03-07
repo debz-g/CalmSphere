@@ -3,7 +3,6 @@ package dev.redfox.calmsphere.di
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.http.NetworkException
 import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
